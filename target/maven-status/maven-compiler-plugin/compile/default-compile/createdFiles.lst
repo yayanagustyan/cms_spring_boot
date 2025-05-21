@@ -11,6 +11,7 @@ com/mookaps/cms/http/AuthRequest.class
 com/mookaps/cms/exceptions/ResourceNotFoundException.class
 com/mookaps/cms/files/FileUtil.class
 com/mookaps/cms/http/JsonResponse.class
+com/mookaps/cms/files/UploadRequest.class
 com/mookaps/cms/helpers/Common.class
 com/mookaps/cms/security/SecurityConfig.class
 com/mookaps/cms/CmsApplication.class
@@ -18,10 +19,11 @@ com/mookaps/cms/security/CustomUserDetailsService.class
 com/mookaps/cms/controllers/UserController.class
 com/mookaps/cms/services/UserService.class
 com/mookaps/cms/files/FileUtil$1.class
+com/mookaps/cms/services/FileStorageService.class
 com/mookaps/cms/http/AuthResponse.class
 com/mookaps/cms/controllers/BaseController.class
+com/mookaps/cms/controllers/UploadController.class
 com/mookaps/cms/controllers/AuthenticateController.class
 com/mookaps/cms/files/JsonFileService.class
 com/mookaps/cms/security/PasswordHasher.class
-com/mookaps/cms/models/TestTable.class
 com/mookaps/cms/files/FileUtil$3.class

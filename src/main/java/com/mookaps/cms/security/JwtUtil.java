@@ -21,7 +21,7 @@ public class JwtUtil {
     @Autowired
     private JsonFileService jService;
 
-    public static String secret = "admin";
+    public String secret = "admin";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

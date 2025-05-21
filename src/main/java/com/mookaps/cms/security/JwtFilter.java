@@ -34,7 +34,8 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JsonFileService jService;
 
-    private static final List<String> PUBLIC_PATHS = List.of("/", "/auth/authenticate", "/docs");
+    // private static final List<String> PUBLIC_PATHS = List.of("/",
+    // "/auth/authenticate", "/docs");
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -45,11 +46,11 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = null;
         String userName = null;
 
-        String path = httpServletRequest.getRequestURI();
-        if (PUBLIC_PATHS.contains(path)) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
+        // String path = httpServletRequest.getRequestURI();
+        // if (PUBLIC_PATHS.contains(path)) {
+        // filterChain.doFilter(httpServletRequest, httpServletResponse);
+        // return;
+        // }
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             token = authorizationHeader.substring(7);
@@ -66,7 +67,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             try {
                 Claims claims = Jwts.parser()
-                        .setSigningKey("admin")
+                        .setSigningKey(jwtUtil.secret)
                         .parseClaimsJws(token)
                         .getBody();
 

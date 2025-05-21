@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        String[] allowed = { "/", "/docs", "/auth/**", "/css/**", "/js/**", "/images/**" };
+        String[] allowed = { "/", "/docs", "/auth/**", "/css/**", "/js/**", "/images/**", "/api/v1/download/**" };
         http.authorizeRequests().antMatchers(allowed).permitAll().and().csrf().disable()
                 .authorizeRequests().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

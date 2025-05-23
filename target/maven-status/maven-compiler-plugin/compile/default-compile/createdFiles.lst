@@ -23,6 +23,7 @@ com/mookaps/cms/services/FileStorageService.class
 com/mookaps/cms/http/AuthResponse.class
 com/mookaps/cms/controllers/BaseController.class
 com/mookaps/cms/controllers/UploadController.class
+com/mookaps/cms/controllers/HomeController.class
 com/mookaps/cms/controllers/AuthenticateController.class
 com/mookaps/cms/files/JsonFileService.class
 com/mookaps/cms/security/PasswordHasher.class

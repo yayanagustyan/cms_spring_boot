@@ -1,6 +1,7 @@
 /Users/sofiandamha/Documents/yayan/dec/BE/java/cms/src/main/java/com/mookaps/cms/CmsApplication.java
 /Users/sofiandamha/Documents/yayan/dec/BE/java/cms/src/main/java/com/mookaps/cms/controllers/AuthenticateController.java
 /Users/sofiandamha/Documents/yayan/dec/BE/java/cms/src/main/java/com/mookaps/cms/controllers/BaseController.java
+/Users/sofiandamha/Documents/yayan/dec/BE/java/cms/src/main/java/com/mookaps/cms/controllers/HomeController.java
 /Users/sofiandamha/Documents/yayan/dec/BE/java/cms/src/main/java/com/mookaps/cms/controllers/UploadController.java
 /Users/sofiandamha/Documents/yayan/dec/BE/java/cms/src/main/java/com/mookaps/cms/controllers/UserController.java
 /Users/sofiandamha/Documents/yayan/dec/BE/java/cms/src/main/java/com/mookaps/cms/exceptions/GlobalExceptionHandler.java

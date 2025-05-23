@@ -100,7 +100,7 @@ public class UserService {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("username", username);
         map.put("raws", authentication);
-        map.put("active", 1);
+        // map.put("active", 1);
         return ApiResponse.json(200, "Login Information", Collections.singletonList(map));
     }
 

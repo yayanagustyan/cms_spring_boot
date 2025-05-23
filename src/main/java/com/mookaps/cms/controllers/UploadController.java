@@ -34,11 +34,11 @@ public class UploadController {
 
     // Upload file
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("path") String path) {
         try {
             String name = file.getOriginalFilename();
             if (isValidExtension(name)) {
-                String fileName = fileStorageService.storeFile(file);
+                String fileName = fileStorageService.storeFile(file, path);
                 return ApiResponse.success(Collections.emptyList(), "File uploaded: " + fileName);
             } else {
                 return ApiResponse.error(400, "Invalid file type");
@@ -54,8 +54,8 @@ public class UploadController {
             if (!req.getFilename().matches(".*\\.(jpg|png|jpeg|pdf)$")) {
                 return ApiResponse.error(400, "Unsupported file type.");
             } else {
-                fileStorageService.storeBase64(req);
-                return ApiResponse.success(Collections.emptyList(), "File saved: ");
+                String fileName = fileStorageService.resizeBase64Image(req);
+                return ApiResponse.success(Collections.emptyList(), "File saved: " + fileName);
             }
         } catch (IllegalArgumentException e) {
             return ApiResponse.error(400, "Invalid base64 content.");

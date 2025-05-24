@@ -70,18 +70,33 @@ public class FileStorageService {
         deleteAllContain(uploadPath);
 
         String ext = getExt(file).split("/")[1];
-        String filename = "IMG-" + Common.generateRandomString(20) + "." + ext;
-
-        try (InputStream in = file.getInputStream()) {
-            Thumbnails.of(in)
-                    .size(width, height)
-                    .keepAspectRatio(true)
-                    .outputFormat(ext)
-                    .toFile(dirSave + filename);
-        } catch (Exception e) {
-            e.getStackTrace();
+        String type = "IMG-";
+        if (ext.equals("pdf")) {
+            type = "PDF-";
         }
-        return filename;
+        String filename = type + Common.generateRandomString(20) + "." + ext;
+
+        // PDF needn't to resize
+        if (ext.equals("pdf")) {
+            Log.info("DISINI");
+            Path targetLocation = uploadPath.resolve(filename);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            return filename;
+        } else {
+            try (InputStream in = file.getInputStream()) {
+                Thumbnails.of(in)
+                        .size(width, height)
+                        .keepAspectRatio(true)
+                        .outputFormat(ext)
+                        .toFile(dirSave + filename);
+            } catch (Exception e) {
+                Log.error(e.getMessage());
+                e.getStackTrace();
+                return e.getMessage();
+            }
+            return filename;
+        }
+
     }
 
     public String storeBase64(UploadRequest file) throws IOException {
@@ -110,7 +125,12 @@ public class FileStorageService {
         String base64Image = file.getBase64();
         String dirSave = createDir(file.getPath());
         String ext = file.getFilename().split("\\.")[1];
-        String filename = "IMG-" + Common.generateRandomString(20) + "." + ext;
+
+        String type = "IMG-";
+        if (ext.equals("pdf")) {
+            type = "PDF-";
+        }
+        String filename = type + Common.generateRandomString(20) + "." + ext;
         String filePath = dirSave + filename;
 
         Path uploadPath = Paths.get(dirSave);
@@ -118,28 +138,36 @@ public class FileStorageService {
 
         // 1. Decode base64 to BufferedImage
         byte[] decodedBytes = Base64.getDecoder().decode(base64Image);
-        InputStream inputStream = new ByteArrayInputStream(decodedBytes);
 
-        // 2. Resize image with Thumbnailator
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Thumbnails.of(inputStream)
-                .size(width, height)
-                .keepAspectRatio(true)
-                .outputFormat(ext) // or "png"
-                .toOutputStream(outputStream);
-
-        // 3. Save it
-        byte[] resizedBytes = outputStream.toByteArray();
-        try {
+        // 1.a Check file type for PDF, which is need not to resize
+        if (ext.equals("pdf")) {
             try (FileOutputStream fos = new FileOutputStream(filePath)) {
-                fos.write(resizedBytes);
+                fos.write(decodedBytes);
             }
-        } catch (Exception e) {
-            Log.error(e.getMessage());
-            return e.getMessage();
-        }
-        return filename;
+            return filename;
+        } else {
+            InputStream inputStream = new ByteArrayInputStream(decodedBytes);
 
+            // 2. Resize image with Thumbnailator
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            Thumbnails.of(inputStream)
+                    .size(width, height)
+                    .keepAspectRatio(true)
+                    .outputFormat(ext) // or "png"
+                    .toOutputStream(outputStream);
+
+            // 3. Save it
+            byte[] resizedBytes = outputStream.toByteArray();
+            try {
+                try (FileOutputStream fos = new FileOutputStream(filePath)) {
+                    fos.write(resizedBytes);
+                }
+            } catch (Exception e) {
+                Log.error(e.getMessage());
+                return e.getMessage();
+            }
+            return filename;
+        }
     }
 
     public Resource loadFile(String filename) throws IOException {

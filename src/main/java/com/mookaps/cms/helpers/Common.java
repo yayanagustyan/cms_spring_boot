@@ -4,6 +4,8 @@ import java.security.SecureRandom;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public class Common {
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -22,5 +24,13 @@ public class Common {
             sb.append(CHARACTERS.charAt(index));
         }
         return sb.toString();
+    }
+
+    public static String getBaseUrl(HttpServletRequest request) {
+        String baseUrl = request.getScheme() + "://" + request.getServerName() +
+                (request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : ":" + request.getServerPort()) +
+                request.getContextPath();
+
+        return baseUrl;
     }
 }

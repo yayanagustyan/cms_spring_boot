@@ -15,7 +15,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
     // private static final List<String> PUBLIC_PATHS = List.of("/",
     // "/auth/authenticate", "/docs");
 
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
             FilterChain filterChain) throws ServletException, IOException {
